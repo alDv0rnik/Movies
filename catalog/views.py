@@ -1,6 +1,8 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, HttpResponse, Http404, redirect
 
+from catalog.models import Movie
+
 
 CATEGORIES = (
     "action",
@@ -10,15 +12,15 @@ CATEGORIES = (
 
 
 def index(request):
-    return HttpResponse("<h3>Main page</h3>")
+    return render(request, "base.html")
 
 
 def catalog_view(request):
-    if request.GET:
-        params = request.GET
-        id_ = params.get('mov_id')
-        print(id_)
-    return HttpResponse("<h3>Main page</h3>actions</p>TV shows</p>")
+    movies = Movie.objects.all()
+    context = {
+        "movies": movies
+    }
+    return render(request, "movies.html", context=context)
 
 
 def catalog_detail_view(request, cat):
