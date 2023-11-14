@@ -1,7 +1,11 @@
-from django.http import HttpResponseNotFound
-from django.shortcuts import render, HttpResponse, Http404, redirect
+import logging
 
+from django.http import HttpResponseNotFound
+from django.shortcuts import render, HttpResponse, redirect
 from catalog.models import Movie
+
+
+logger = logging.getLogger('movie_logger')
 
 
 CATEGORIES = (
@@ -12,6 +16,7 @@ CATEGORIES = (
 
 
 def index(request):
+    logger.info("Start application")
     return render(request, "base.html")
 
 
