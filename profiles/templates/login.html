@@ -16,6 +16,7 @@
             </div>
             <div class="modal-body p-4">
                 <form class="" method="POST" action="" autocomplete="off">
+                    {% csrf_token %}
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control rounded-4" id="floatingInputValue1" name="username" placeholder="Username">
                         <label for="floatingInputValue1">Username</label>
@@ -25,6 +26,9 @@
                         <label for="floatingPassword">Password</label>
                     </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-4 btn-warning" type="submit">Login</button>
+                    {% for message in messages %}
+                        <p id="messages">{{ message }}</p>
+                    {% endfor %}
                     <hr class="my-4">
                     <div class="mt-1">
                         <div class="d-flex justify-content-center links">
