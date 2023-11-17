@@ -7,18 +7,14 @@ logger = logging.getLogger('movie_logger')
 
 
 def login_user(request):
-    # breakpoint()
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect("home")
         else:
             logger.info('Username or password do not match')
-    return render(request, 'login.html')
+    return render(request, "login.html")
+
