@@ -23,7 +23,6 @@ def catalog_view(request):
 
 def favourite_add(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
-    print(request.user.__dict__)
     profile = request.user.profile_user
     if profile.favourites.filter(id=movie_id).exists():
         profile.favourites.remove(movie)

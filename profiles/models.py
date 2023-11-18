@@ -14,8 +14,8 @@ class Profile(models.Model):
     avatar = models.ImageField("Avatar", upload_to="users/", default="default.png")
     favourites = models.ManyToManyField(Movie, blank=True, default=None, related_name="favourite_movie")
 
-    created_at = models.DateTimeField(verbose_name="Created at", auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name="Updated at", auto_now=True)
+    created_at = models.DateTimeField(verbose_name="Created at", auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(verbose_name="Updated at", auto_now=True, null=True)
 
     def __str__(self):
         return f"{self.pk} - {self.user.username}"
