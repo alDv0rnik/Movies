@@ -6,6 +6,5 @@ from catalog import views
 
 urlpatterns = [
     path('', views.catalog_view, name='movies_list'),
-    path('<slug:actor_slug>/', views.catalog_detail_view),
-    path('<str:cat>/<int:mov_id>/', views.movie_detail_view),
+    path('fav/<int:movie_id>', views.favourite_add, name='favourite'),
 ]

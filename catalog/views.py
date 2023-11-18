@@ -1,18 +1,11 @@
 import logging
 
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse, redirect
 from catalog.models import Movie
 
 
 logger = logging.getLogger('movie_logger')
-
-
-CATEGORIES = (
-    "action",
-    "comedy",
-    "tv_shows",
-)
 
 
 def index(request):
@@ -28,14 +21,15 @@ def catalog_view(request):
     return render(request, "movies.html", context=context)
 
 
-def catalog_detail_view(request, cat):
-    if cat not in CATEGORIES:
-        return redirect('home', permanent=True)
-    return HttpResponse(f"<h3>Main page</h3>{cat}</p>")
-
-
-def movie_detail_view(request, cat, mov_id):
-    return HttpResponse(f"<h3>{cat}</h3>{mov_id}</p>")
+def favourite_add(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    print(request.user.__dict__)
+    profile = request.user.profile_user
+    if profile.favourites.filter(id=movie_id).exists():
+        profile.favourites.remove(movie)
+    else:
+        profile.favourites.add(movie)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def pageNotFound(request, exception):

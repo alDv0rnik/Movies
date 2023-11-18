@@ -34,8 +34,12 @@
                     <button class="w-100 mb-2 btn btn-lg rounded-4 btn-warning" type="submit">Sign up</button>
                     <hr class="my-4">
                 </form>
+                {% for message in messages %}
+                <div class="alert alert-info" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
             </div>
-
             {{form.errors}}
             <div class="mt-1 mb-5">
                 <div class="d-flex justify-content-center links">

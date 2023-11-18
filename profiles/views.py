@@ -4,6 +4,7 @@ from .forms import CreateUserForm
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 
@@ -12,7 +13,6 @@ logger = logging.getLogger('movie_logger')
 
 @unauthenticated_user
 def login_user(request):
-    # breakpoint()
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -32,10 +32,16 @@ def register_user(request):
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data["username"]
-            messages.info(request, f"The user with username {username} has been registered")
-            return redirect("login")
+            try:
+                if User.objects.filter(username=username).exists():
+                    messages.info(request, f"The user with username {username} already exists")
+                else:
+                    form.save()
+                    messages.info(request, f"The user with username {username} has been registered")
+                    return redirect("login")
+            except User.DoesNotExist as error:
+                logger.error(error)
     context = {
         "form": form
     }
