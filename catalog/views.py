@@ -1,7 +1,7 @@
 import logging
 
 from django.http import HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, get_object_or_404
 from catalog.models import Movie
 
 
@@ -19,6 +19,18 @@ def catalog_view(request):
         "movies": movies
     }
     return render(request, "movies.html", context=context)
+
+
+def movie_detail_view(request, movie_slug):
+    movie = Movie.objects.prefetch_related().get(slug='alien')
+    genres = movie.genre.all()
+    actors = movie.actors.all()
+    context = {
+        "movie": movie,
+        "genres": genres,
+        "actors": actors
+    }
+    return render(request, 'movie.html', context=context)
 
 
 def favourite_add(request, movie_id):

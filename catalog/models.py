@@ -1,3 +1,5 @@
+from PIL import Image
+
 from django.db import models
 from django.urls import reverse
 
@@ -36,6 +38,28 @@ class Actor(models.Model):
         ordering = ['last_name']
 
 
+class Director(models.Model):
+    first_name = models.CharField(max_length=30, verbose_name="First name")
+    last_name = models.CharField(max_length=30, verbose_name="Last name")
+    bio = models.TextField(verbose_name="biography")
+    photo = models.ImageField(verbose_name="Image", default="default.png", upload_to='movies/')
+    slug = models.SlugField(unique=True, db_index=True, verbose_name="URL")
+
+    created_at = models.DateTimeField(verbose_name="Created at", auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name="Updated at", auto_now=True)
+
+    def __str__(self):
+        return f"{self.pk} - {self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("director_view", kwargs={"director_slug": self.slug})
+
+    class Meta:
+        verbose_name = "Director"
+        verbose_name_plural = "Directors"
+        ordering = ['last_name']
+
+
 class Genre(models.Model):
     name = models.CharField(max_length=50)
 
@@ -66,6 +90,7 @@ class Movie(models.Model):
         upload_to="movies/"
     )
     actors = models.ManyToManyField(Actor, related_name="movie_actor")
+    director = models.ManyToManyField(Director, related_name="movie_director")
     budget = models.PositiveIntegerField(
         verbose_name="Budget",
         default=0,
@@ -80,6 +105,14 @@ class Movie(models.Model):
     def __str__(self):
         return f"{self.pk} - {self.title}"
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.poster.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (400, 300)
+            img.thumbnail(output_size)
+            img.save(self.poster.path)
+
     def get_absolute_url(self):
         return reverse("movie_detail", kwargs={"movie_slug": self.slug})
 
@@ -93,29 +126,6 @@ class Movie(models.Model):
         indexes = [
             models.Index(fields=('created_at',))
         ]
-
-
-class Director(models.Model):
-    first_name = models.CharField(max_length=30, verbose_name="First name")
-    last_name = models.CharField(max_length=30, verbose_name="Last name")
-    bio = models.TextField(verbose_name="biography")
-    photo = models.ImageField(verbose_name="Image", default="default.png", upload_to='movies/')
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="Movie")
-    slug = models.SlugField(unique=True, db_index=True, verbose_name="URL")
-
-    created_at = models.DateTimeField(verbose_name="Created at", auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name="Updated at", auto_now=True)
-
-    def __str__(self):
-        return f"{self.pk} - {self.first_name} {self.last_name}"
-
-    def get_absolute_url(self):
-        return reverse("director_view", kwargs={"director_slug": self.slug})
-
-    class Meta:
-        verbose_name = "Director"
-        verbose_name_plural = "Directors"
-        ordering = ['last_name']
 
 
 class Screenshot(models.Model):

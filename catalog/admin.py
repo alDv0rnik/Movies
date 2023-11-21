@@ -25,8 +25,8 @@ class MovieShotsInline(admin.TabularInline):
     get_image.short_description = "Image"
 
 
-class DirectorInline(admin.TabularInline):
-    model = Director
+@admin.register(Director)
+class DirectorAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", )
     readonly_fields = ("get_image",)
     prepopulated_fields = {"slug": ("first_name", "last_name", )}
@@ -40,7 +40,7 @@ class DirectorInline(admin.TabularInline):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = ("title", "category",)
-    inlines = [MovieShotsInline, DirectorInline, ]
+    inlines = [MovieShotsInline, ]
     readonly_fields = ("get_image",)
     prepopulated_fields = {"slug": ("title",)}
 
@@ -60,6 +60,3 @@ class ActorAdmin(admin.ModelAdmin):
         return mark_safe(f'<img src={obj.photo.url} width="100" height="110">')
 
     get_image.short_description = "Image"
-
-
-admin.site.register(Director)
