@@ -91,9 +91,9 @@ class Movie(models.Model):
     )
     actors = models.ManyToManyField(Actor, related_name="movie_actor")
     director = models.ManyToManyField(Director, related_name="movie_director")
-    budget = models.PositiveIntegerField(
+    budget = models.FloatField(
         verbose_name="Budget",
-        default=0,
+        default=0.0,
         help_text="million of US dollars"
     )
     genre = models.ManyToManyField(Genre, verbose_name="Genre")

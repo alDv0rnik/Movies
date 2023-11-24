@@ -34,9 +34,11 @@
                             <tbody>
                                 <tr>
                                     <td width="390">Actors</td>
-                                    {% for actor in actors %}
-                                        <td>{{actor.first_name}} {{actor.last_name}}</td>
+                                    <td>
+                                       {% for actor in actors %}
+                                        <li>{{actor.first_name}} {{actor.last_name}}</li>
                                     {% endfor %}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Year of production</td>

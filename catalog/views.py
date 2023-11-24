@@ -22,7 +22,7 @@ def catalog_view(request):
 
 
 def movie_detail_view(request, movie_slug):
-    movie = Movie.objects.prefetch_related().get(slug='alien')
+    movie = Movie.objects.prefetch_related().get(slug=movie_slug)
     genres = movie.genre.all()
     actors = movie.actors.all()
     context = {
