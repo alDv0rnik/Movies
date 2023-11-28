@@ -14,14 +14,15 @@ def index(request):
 
 
 def catalog_view(request):
-    movies = Movie.objects.values(
-        'id',
-        'title',
-        'year',
-        'description',
-        'poster',
-        'slug'
-    ).order_by('title')
+    movies = Movie.objects.defer(
+        'category',
+        'actors',
+        'director',
+        'budget',
+        'genre',
+        'created_at',
+        'updated_at'
+    )
     context = {
         "movies": movies
     }
