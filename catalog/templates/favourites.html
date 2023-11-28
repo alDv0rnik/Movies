@@ -4,7 +4,7 @@
 <div class="album py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for movie in movies %}
+        {% for movie in f_movies %}
         <div class="col">
           <div class="card shadow-sm">
             <div class="card h-100 w-100" style="background-color: gray">
@@ -16,7 +16,7 @@
               <h5 class="card-title">{{movie.title}} ({{movie.year}})</h5>
               <p class="card-text">{{movie.description|truncatechars:180 }}</p>
               <a href="{% url 'movie_details' movie.slug %}" class="btn btn-warning">Details</a>
-              <a href="{% url 'favourite' movie.id %}" class="btn btn-light">Add to favourites</a>
+              <a href="{% url 'favourite' movie.id %}" class="btn btn-light">Remove</a>
             </div>
           </div>
         </div>
@@ -25,8 +25,3 @@
     </div>
 </div>
 {% endblock %}
-
-
-
-
-

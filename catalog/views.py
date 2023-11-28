@@ -14,7 +14,14 @@ def index(request):
 
 
 def catalog_view(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.values(
+        'id',
+        'title',
+        'year',
+        'description',
+        'poster',
+        'slug'
+    ).order_by('title')
     context = {
         "movies": movies
     }
@@ -41,6 +48,14 @@ def favourite_add(request, movie_id):
     else:
         profile.favourites.add(movie)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def favourite_list(request):
+    f_movies = request.user.profile_user.favourites.all()
+    context = {
+        "f_movies": f_movies
+    }
+    return render(request, 'favourites.html', context=context)
 
 
 def pageNotFound(request, exception):
