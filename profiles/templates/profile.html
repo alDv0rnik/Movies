@@ -8,15 +8,12 @@
         <div class="col-sm-3 mt-3">
             <h3>{{ profile.first_name }} {{ profile.last_name }}</h3>
         </div>
-        <div class="col-sm-9 mt-3" style="text-align: right;">
-            <a href="#" class="nav-link px-2 text-dark">Update profile</a>
-        </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
             <div class="text">
-                {% if profile.pic %}
-                <img src="{{ student.pic.url }}" class="avatar img-circle" alt="avatar" style=
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" class="avatar img-circle" alt="avatar" style=
                         "width: 150px;
                          height: 150px;
                          border-radius: 50%;
@@ -42,9 +39,12 @@
                             <li><b>Name:</b> {{ profile.first_name }}</li>
                             <li><b>Surname:</b> {{ profile.last_name }}</li>
                             <li><b>email:</b> {{ profile.email }}</li>
+                            <li><b>Username:</b> {{ profile.nickname }}</li>
 
                             <li><b>Registration date:</b> {{ profile.created_at|date:"M d, Y" }}</li>
                         </ul>
+<!--                        <button type="button" onclick="window.location.href={% url 'user_update_page' %}" class="btn btn-warning">Update profile</button>-->
+                        <a href="{% url 'user_update_page' %}" class="nav-link px-2 text-dark">Update profile</a>
                     </div>
                 </div>
             </div>

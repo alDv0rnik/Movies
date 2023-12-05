@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', catalog_views.index, name='home'),
     path('catalog/', include('catalog.urls')),
+    path('profile/', include('profiles.urls')),
     path('login/', profile_views.login_user, name='login'),
     path('logout/', profile_views.logout_user, name='logout'),
     path('register/', profile_views.register_user, name='register')
