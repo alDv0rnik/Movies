@@ -59,7 +59,6 @@ def show_user_page(request):
     context = {
         "profile": profile_
     }
-
     return render(request, 'profile.html', context=context)
 
 
@@ -76,7 +75,6 @@ def update_profile(request):
             profile_.save()
             messages.success(request, "Profile was updated for " + str(request.user))
             logger.info("Profile was updated for " + str(request.user))
-            #
     context = {
         "form": form
     }
