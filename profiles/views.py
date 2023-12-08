@@ -72,6 +72,7 @@ def update_profile(request):
             profile_.first_name = data["first_name"]
             profile_.last_name = data["last_name"]
             profile_.bio = data["bio"]
+            profile_.avatar = data["avatar"]
             profile_.save()
             messages.success(request, "Profile was updated for " + str(request.user))
             logger.info("Profile was updated for " + str(request.user))

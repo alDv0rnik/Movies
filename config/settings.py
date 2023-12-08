@@ -9,7 +9,7 @@ DEBUG = config('DEBUG')
 
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://movies-production-73c3.up.railway.app']
+
 
 # Application definition
 
@@ -36,6 +36,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_COOKIE_SECURE = True
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [

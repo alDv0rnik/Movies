@@ -17,26 +17,32 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = '__all__'
-        exclude = ['user', 'nickname', 'email', 'favourites']
+        exclude = ['user', 'favourites', 'email', 'nickname']
 
         widgets = {
-            'first_name': forms.TextInput(attrs={
-                'class': "form-control rounded-4",
-                'style': 'max-width: 300px;',
-                'placeholder': 'Name'
-            }),
-            'last_name': forms.TextInput(attrs={
-                'class': "form-control rounded-4",
-                'style': 'max-width: 300px;',
-                'placeholder': 'Surname'
-            }),
-            'bio': forms.Textarea(attrs={
-                'class': "form-control rounded-4",
-                'style': 'max-width: 300px;',
-                'placeholder': 'bio'
-            }),
-            'avatar': forms.FileInput(attrs={
-                'class': "form-control rounded-4",
-                'style': 'max-width: 300px;'
-            })
+            'first_name': forms.TextInput(
+                attrs={
+                 "class": "form-control rounded-4",
+                 "style": "max-width: 300px",
+                 "placeholder": "Name"
+                }),
+            'last_name': forms.TextInput(
+                attrs={
+                 "class": "form-control rounded-4",
+                 "style": "max-width: 300px",
+                 "placeholder": "Surname"
+                }),
+            'bio': forms.Textarea(
+                attrs={
+                 "class": "form-control rounded-4",
+                 "style": "max-width: 300px",
+                 "placeholder": "My bio"
+                }),
+            'avatar': forms.FileInput(
+                attrs={
+                    "class": "form-control rounded-4",
+                    "style": "max-width: 300px",
+                    "placeholder": "Choose file ..."
+                }
+            )
         }
