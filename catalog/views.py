@@ -59,5 +59,15 @@ def favourite_list(request):
     return render(request, 'favourites.html', context=context)
 
 
+def search_result(request):
+    query = request.GET.get('q')
+    movies = Movie.objects.filter(title__icontains=query)
+    context = {
+        "movies": movies
+    }
+
+    return render(request, "search_res.html", context=context)
+
+
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h3>Page not found</h3>")

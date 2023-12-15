@@ -13,7 +13,8 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('login/', profile_views.login_user, name='login'),
     path('logout/', profile_views.logout_user, name='logout'),
-    path('register/', profile_views.register_user, name='register')
+    path('register/', profile_views.register_user, name='register'),
+    path('search/', catalog_views.search_result, name='search_result'),
 ]
 
 if settings.DEBUG:
